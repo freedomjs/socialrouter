@@ -12,7 +12,7 @@ import names
 
 class Application(tornado.web.Application):
   def __init__(self):
-    handlers = [(r"/route", MainHandler)]
+    handlers = [(r"/route/(.*)", MainHandler)]
     settings = dict( autoescape=None )
     tornado.web.Application.__init__(self, handlers, **settings)
 
