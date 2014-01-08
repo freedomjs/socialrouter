@@ -23,7 +23,7 @@ class MainHandler(tornado.websocket.WebSocketHandler):
   def allow_draft76(self):
     return True
 
-  def open(self):
+  def open(self,args):
     print "Open!"
     self.id = str(names.get_full_name())
     self.state = 0
@@ -44,7 +44,7 @@ class MainHandler(tornado.websocket.WebSocketHandler):
     self.on_close()
 
   def on_close(self):
-    if self.id:
+    if hasattr(self, 'id'):
       for key in self.sites:
         MainHandler.sites[key].remove(self.id)
       del MainHandler.waiters[self.id]
