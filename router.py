@@ -3,15 +3,12 @@
  Websocket rendezvous point.
 """
 import os, sys, inspect
-here = os.path.abspath(os.path.split(inspect.getfile(inspect.currentframe()))[0])
-if os.path.join(here, "tornado") not in sys.path:
-  sys.path.insert(0, os.path.join(here, "tornado"))
-
 import tornado.escape
 import tornado.ioloop
 import tornado.websocket
 import tornado.web
 import uuid
+import names
 
 class Application(tornado.web.Application):
   def __init__(self):
@@ -28,7 +25,7 @@ class MainHandler(tornado.websocket.WebSocketHandler):
 
   def open(self):
     print "Open!"
-    self.id = str(uuid.uuid4())
+    self.id = str(names.get_full_name())
     self.state = 0
     ref = self.request.headers.get("Origin")
     self.sites = [ref]
